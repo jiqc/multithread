@@ -18,7 +18,7 @@ class TaskQueue(queue.Queue):
             t.start()
     def worker(self):
         while True:
-            tupl = self.get()
+            #tupl = self.get()
             item, args, kwargs = self.get()
             item(*args, **kwargs)
             self.task_done()
@@ -26,11 +26,11 @@ class TaskQueue(queue.Queue):
 def tests():
     def hi(*args, **kwargs):
         time.sleep(5)
-        print ('Hi!')
+        print (args)
         
     q = TaskQueue(num_workers=5)
-    for item in range(10):
-        q.add_task(hi)
+    for item in range(5):
+        q.add_task(hi,item)
     q.join() # block until all tasks are done
     print ('All done!')
     
